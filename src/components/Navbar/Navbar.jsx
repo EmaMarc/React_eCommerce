@@ -1,7 +1,7 @@
 import { NavLink, useNavigate, Link } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
 import "../../styles/Mist.scss";
-import logo from "../../assets/logo.png";
+import logo from "../../../public/logo.png";
 import { getFixedFantasy48 } from "../../Features/products/api.js";
 import Cart from "../Cart/Cart.jsx";
 

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../../assets/Logo.png";
+import logo from "../../../public/logo.png";
 import "../../styles/Mist.scss";
 
 export default function Home() {
