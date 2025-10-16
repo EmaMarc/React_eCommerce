@@ -1,5 +1,5 @@
 // src/components/Cart/Cart.jsx
-import { useEffect, useState, useRef, useLocation } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { cartStore } from "./CartStore";
 
