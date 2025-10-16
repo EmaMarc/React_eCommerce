@@ -102,7 +102,7 @@ export default function Cart({ anchorClass = "" }) {
 									setOpen(false);
 									navigate("/checkout");
 								}}>
-								Ir a confirmar compra
+								Confirmar compra
 							</button>
 						</div>
 					)}
