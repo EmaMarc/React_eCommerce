@@ -1,4 +1,4 @@
-import { cartStore } from "../../components/Cart/CartStore.js";
+import { cartStore } from "../../components/Cart/cartStore.js";
 
 const fmtARS = (n) => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(n || 0);
 const priceToNumber = (s) => Number((s || "").replace(/[^\d]/g, "")) || 0;

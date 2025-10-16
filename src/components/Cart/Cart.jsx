@@ -1,7 +1,7 @@
 // src/components/Cart/Cart.jsx
 import { useEffect, useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { cartStore } from "./CartStore";
+import { cartStore } from "./cartStore";
 
 const fmtARS = (n) => new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(n || 0);
 const priceToNumber = (s) => Number((s || "").replace(/[^\d]/g, "")) || 0;
