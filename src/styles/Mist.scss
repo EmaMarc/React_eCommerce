@@ -1,0 +1,127 @@
+/* --- Keyframes --- */
+@keyframes mythica-mist-a {
+	0% {
+		transform: translateY(6px) scale(0.95);
+		opacity: 0;
+	}
+	50% {
+		transform: translateY(-4px) scale(1.04);
+		opacity: 0.85;
+	}
+	100% {
+		transform: translateY(6px) scale(0.95);
+		opacity: 0;
+	}
+}
+@keyframes mythica-mist-b {
+	0% {
+		transform: translateY(8px) scale(0.92);
+		opacity: 0;
+	}
+	50% {
+		transform: translateY(-6px) scale(1.06);
+		opacity: 0.7;
+	}
+	100% {
+		transform: translateY(8px) scale(0.92);
+		opacity: 0;
+	}
+}
+
+/* --- Wrapper general de la marca --- */
+.mythica-brand {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	overflow: visible;
+}
+
+.mythica-brand:hover {
+	transition: all 750ms ease;
+	scale: 1.05;
+	cursor: pointer;
+}
+
+/* --- Util reutiizable: niebla desactivada por defecto --- */
+.mythica-mist {
+	position: relative;
+	isolation: isolate;
+	z-index: 0;
+}
+.mythica-mist > * {
+	position: relative;
+	z-index: 2; /* contenido por encima de la niebla */
+}
+
+/* Pseudo-elementos base: SIN animación ni opacidad (no laten) */
+.mythica-mist::before,
+.mythica-mist::after {
+	content: "";
+	position: absolute;
+	pointer-events: none;
+	z-index: 1; /* debajo del contenido, encima del fondo */
+	opacity: 0;
+	transform: scale(0.95);
+	filter: blur(0); /* se ajusta en cada variante */
+	/* entrada rápida */
+	transition: opacity 180ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+	/* NO animation aquí */
+}
+
+/* Variante LOGO (área compacta) */
+.mythica-mist--logo::before {
+	inset: -16px;
+	filter: blur(12px);
+	background: radial-gradient(60px 46px at 50% 58%, rgba(38, 212, 137, 0.75), transparent 72%),
+		radial-gradient(84px 58px at 28% 24%, rgba(139, 236, 199, 0.55), transparent 76%);
+}
+.mythica-mist--logo::after {
+	inset: -26px;
+	filter: blur(18px);
+	background: radial-gradient(110px 78px at 62% 72%, rgba(47, 255, 172, 0.5), transparent 76%),
+		radial-gradient(150px 100px at 40% 30%, rgba(156, 241, 207, 0.42), transparent 80%);
+}
+
+/* Variante TEXTO (más ancha) */
+.mythica-mist--text::before {
+	inset: -10px -22px;
+	filter: blur(12px);
+	background: radial-gradient(160px 64px at 35% 60%, rgba(149, 233, 198, 0.65), transparent 75%),
+		radial-gradient(200px 82px at 70% 40%, rgba(68, 250, 174, 0.45), transparent 78%);
+}
+.mythica-mist--text::after {
+	inset: -18px -34px;
+	filter: blur(18px);
+	background: radial-gradient(260px 120px at 40% 70%, rgba(185, 253, 228, 0.4), transparent 80%),
+		radial-gradient(320px 140px at 75% 35%, rgba(17, 189, 123, 0.34), transparent 82%);
+}
+
+/* --- HOVER: aquí recién activamos opacidad + animación (rápida) --- */
+.mythica-brand:hover .mythica-mist::before {
+	opacity: 1;
+	transform: scale(1.08);
+	animation: mythica-mist-a 3.5s ease-in-out infinite; /* más rápida */
+}
+.mythica-brand:hover .mythica-mist::after {
+	opacity: 1;
+	transform: scale(1.08);
+	animation: mythica-mist-b 4.2s ease-in-out infinite; /* más rápida */
+}
+
+/* Glow en el texto durante hover */
+.mythica-brand-text {
+	transition: color 180ms cubic-bezier(0.2, 0.8, 0.2, 1), text-shadow 180ms ease;
+}
+.mythica-brand:hover .mythica-brand-text {
+	color: var(--green-600);
+	text-shadow: 0 0 18px rgba(62, 154, 114, 0.35);
+}
+
+/* Preferencia de usuario: reduce motion */
+@media (prefers-reduced-motion: reduce) {
+	.mythica-brand:hover .mythica-mist::before,
+	.mythica-brand:hover .mythica-mist::after {
+		animation: none;
+	}
+}
