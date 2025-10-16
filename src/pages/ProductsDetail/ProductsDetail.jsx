@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useLocation, Link } from "react-router-dom";
 import { getWork, getAuthorName, pickDescription, coverById } from "../../Features/products/api.js";
+import { cartStore } from "../../components/Cart/cartStore.js";
 
 // Precio fake por si entramos directo sin state
 function fakePrice(seed) {
@@ -117,9 +118,9 @@ export default function ProductsDetail() {
 								<span className="material-icons text-[color:var(--gold-600)]">local_offer</span>
 							</div>
 							<button
+								onClick={() => cartStore.add(stateBook || { id: workKey, title, image: cover, price })}
 								className="mt-3 w-full h-11 rounded-lg text-white bg-[color:var(--green-600)] hover:bg-[color:var(--green-500)]
-                           shadow-[var(--shadow-soft)] transition-colors flex items-center justify-center gap-2">
-								<span className="material-icons text-[20px]">shopping_cart</span>
+                           shadow-[var(--shadow-soft)] transition-colors flex items-center justify-center gap-2 hover:cursor-pointer">
 								Añadir al carrito
 							</button>
 						</div>
@@ -133,7 +134,7 @@ export default function ProductsDetail() {
 								to="/products"
 								className="inline-flex items-center  px-3 py-2 rounded-lg border [border-color:var(--green-300)]
                             bg-white/80 text-[color:var(--green-700)]
-                            hover:bg-[color:var(--green-500)] hover:text-[color:var(--white)] hover:shadow-[var(--shadow-soft)] transition-colors">
+                            hover:bg-[color:var(--green-500)] hover:text-[color:var(--)] hover:shadow-[var(--shadow-soft)] transition-colors">
 								<span className="material-icons text-[18px]">arrow_back</span>
 								Volver al catálogo
 							</Link>

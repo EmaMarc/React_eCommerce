@@ -71,3 +71,81 @@ body {
 		opacity: 0;
 	}
 }
+
+@layer components {
+	/* Slider temático: pista suave verdosa + pulgar "moneda" dorada */
+	.fantasy-range {
+		/* base */
+		width: 100%;
+		appearance: none;
+		height: 0.5rem; /* 8px */
+		border-radius: 9999px;
+		outline: none;
+		border: 1px solid var(--surface-border);
+		box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06), var(--shadow-gold);
+		/* color base de la pista; el “relleno” lo pintamos inline desde React */
+		background: linear-gradient(to right, var(--offwhite) 0%, var(--offwhite) 100%);
+		transition: box-shadow 0.2s ease, filter 0.15s ease;
+	}
+	.fantasy-range:hover {
+		filter: brightness(1.02);
+	}
+	.fantasy-range:focus-visible {
+		box-shadow: 0 0 0 4px color-mix(in srgb, var(--green-300) 35%, transparent), var(--shadow-gold);
+	}
+
+	/* ------- WebKit (Chrome/Edge/Opera/Safari) ------- */
+	.fantasy-range::-webkit-slider-runnable-track {
+		height: 0.5rem;
+		border-radius: 9999px;
+		background: transparent; /* el gradiente viene inline */
+	}
+	.fantasy-range::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		height: 1.15rem;
+		width: 1.15rem;
+		border-radius: 9999px;
+		cursor: pointer;
+		margin-top: -6px; /* centra el pulgar sobre pista de 8px */
+		border: 2px solid var(--green-700);
+		/* “moneda” dorada con brillo */
+		background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9) 0 22%, transparent 23%),
+			radial-gradient(circle at 70% 70%, rgba(0, 0, 0, 0.18) 0 26%, transparent 27%), radial-gradient(circle, var(--gold-300) 0 60%, var(--gold-500) 61% 100%);
+		box-shadow: 0 0 0 2px color-mix(in oklab, var(--gold-500) 60%, transparent) inset, 0 1px 2px rgba(0, 0, 0, 0.18),
+			0 0 12px 2px color-mix(in srgb, var(--green-300) 35%, transparent);
+		transition: transform 0.12s ease, box-shadow 0.12s ease;
+	}
+	.fantasy-range:active::-webkit-slider-thumb {
+		transform: scale(1.06);
+		box-shadow: 0 0 0 2px var(--gold-500) inset, 0 1px 2px rgba(0, 0, 0, 0.18), 0 0 16px 3px color-mix(in srgb, var(--green-300) 55%, transparent);
+	}
+
+	/* ------- Firefox ------- */
+	.fantasy-range::-moz-range-track {
+		height: 0.5rem;
+		border-radius: 9999px;
+		background: transparent;
+	}
+	.fantasy-range::-moz-range-progress {
+		height: 0.5rem;
+		border-radius: 9999px 0 0 9999px; /* no se usa porque pintamos inline */
+		background: transparent;
+	}
+	.fantasy-range::-moz-range-thumb {
+		height: 1.15rem;
+		width: 1.15rem;
+		border-radius: 9999px;
+		cursor: pointer;
+		border: 2px solid var(--green-700);
+		background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9) 0 22%, transparent 23%),
+			radial-gradient(circle at 70% 70%, rgba(0, 0, 0, 0.18) 0 26%, transparent 27%), radial-gradient(circle, var(--gold-300) 0 60%, var(--gold-500) 61% 100%);
+		box-shadow: 0 0 0 2px color-mix(in oklab, var(--gold-500) 60%, transparent) inset, 0 1px 2px rgba(0, 0, 0, 0.18),
+			0 0 12px 2px color-mix(in srgb, var(--green-300) 35%, transparent);
+		transition: transform 0.12s ease, box-shadow 0.12s ease;
+	}
+	.fantasy-range:active::-moz-range-thumb {
+		transform: scale(1.06);
+		box-shadow: 0 0 0 2px var(--gold-500) inset, 0 1px 2px rgba(0, 0, 0, 0.18), 0 0 16px 3px color-mix(in srgb, var(--green-300) 55%, transparent);
+	}
+}

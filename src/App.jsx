@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Home from "./pages/Home/Home";
 import Products from "./pages/Products/Products";
 import ProductsDetail from "./pages/ProductsDetail/ProductsDetail";
+import Checkout from "./pages/Checkout/Checkout";
 
 function App() {
 	return (
@@ -24,6 +25,10 @@ function App() {
 					<Route
 						path="/products/:workId"
 						element={<ProductsDetail />}
+					/>
+					<Route
+						path="/checkout"
+						element={<Checkout />}
 					/>
 					<Route
 						path="*"

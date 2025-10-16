@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { cartStore } from "../../../components/Cart/cartStore.js";
 
 export default function BookCard({ book }) {
 	const { title, authors, image, firstYear, price, workKey, id } = book;
@@ -35,6 +36,15 @@ export default function BookCard({ book }) {
 						<span className="text-sm font-medium text-[color:var(--green-700)]">{price}</span>
 					</div>
 				</div>
+				<button
+					type="button"
+					onClick={(e) => {
+						e.preventDefault();
+						cartStore.add(book);
+					}}
+					className="mt-2 w-full h-9 rounded-md text-white bg-[color:var(--green-600)] hover:bg-[color:var(--green-500)] hover:cursor-pointer">
+					Añadir al carrito
+				</button>
 			</article>
 		</Link>
 	);

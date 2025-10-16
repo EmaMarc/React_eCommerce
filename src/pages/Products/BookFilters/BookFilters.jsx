@@ -54,7 +54,7 @@ export default function BookFilters({ value, onChange, onClear, minPriceBound, m
 
 					{/* Precio */}
 					<div className="pt-2">
-						<h5 className=" text-[color:var(--green-700)] mb-2">Precio</h5>
+						<h5 className="mb-2 font-[var(--font-display)] text-[color:var(--green-700)]">Precio</h5>
 
 						{/* Min */}
 						<label className="flex items-center justify-between text-xs text-[color:var(--green-700)]/80">
@@ -70,7 +70,16 @@ export default function BookFilters({ value, onChange, onClear, minPriceBound, m
 								const v = Number(e.target.value);
 								onChange({ ...value, priceMin: Math.min(v, value.priceMax) });
 							}}
-							className="w-full"
+							className="fantasy-range"
+							style={{
+								/* relleno verde desde el inicio hasta el valor actual */
+								background: (() => {
+									const min = minPriceBound || 0;
+									const max = maxPriceBound || 0;
+									const pct = max > min ? ((priceMin - min) * 100) / (max - min) : 0;
+									return `linear-gradient(to right, var(--green-600) ${pct}%, var(--offwhite) ${pct}%)`;
+								})(),
+							}}
 						/>
 
 						{/* Máx */}
@@ -87,7 +96,16 @@ export default function BookFilters({ value, onChange, onClear, minPriceBound, m
 								const v = Number(e.target.value);
 								onChange({ ...value, priceMax: Math.max(v, value.priceMin) });
 							}}
-							className="w-full"
+							className="fantasy-range"
+							style={{
+								/* relleno dorado para diferenciar el slider de Máx */
+								background: (() => {
+									const min = minPriceBound || 0;
+									const max = maxPriceBound || 0;
+									const pct = max > min ? ((priceMax - min) * 100) / (max - min) : 0;
+									return `linear-gradient(to right, var(--gold-600) ${pct}%, var(--offwhite) ${pct}%)`;
+								})(),
+							}}
 						/>
 					</div>
 
