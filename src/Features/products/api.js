@@ -117,3 +117,30 @@ export function resetFixedFantasyCache() {
 		// no importa si falla
 	}
 }
+
+// para imágenes de cover por id
+export const coverById = (id, size = "L") => (id ? `https://covers.openlibrary.org/b/id/${id}-${size}.jpg` : null);
+
+// Detalle "work" (obra)
+export async function getWork(workKey) {
+	// p.ej. workKey = "/works/OL27448W"
+	const res = await fetch(`${OL}${workKey}.json`);
+	if (!res.ok) throw new Error("No se pudo cargar la obra");
+	return await res.json(); // { title, description, covers, subjects, authors:[{author:{key}}], ... }
+}
+
+// Nombres de autores desde sus keys
+export async function getAuthorName(authorKey) {
+	const r = await fetch(`${OL}${authorKey}.json`);
+	if (!r.ok) return null;
+	const j = await r.json();
+	return j.name || null;
+}
+
+// Helper: normaliza description (string u objeto)
+export function pickDescription(desc) {
+	if (!desc) return null;
+	if (typeof desc === "string") return desc;
+	if (typeof desc === "object" && desc.value) return desc.value;
+	return null;
+}

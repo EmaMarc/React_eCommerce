@@ -6,7 +6,6 @@ import Navbar from "./components/Navbar/Navbar";
 import Home from "./pages/Home/Home";
 import Products from "./pages/Products/Products";
 import ProductsDetail from "./pages/ProductsDetail/ProductsDetail";
-import ProductsForm from "./pages/ProductsForm/ProductsForm";
 
 function App() {
 	return (
@@ -23,11 +22,7 @@ function App() {
 						element={<Products />}
 					/>
 					<Route
-						path="/products/new"
-						element={<ProductsForm />}
-					/>
-					<Route
-						path="/products/:id"
+						path="/products/:workId"
 						element={<ProductsDetail />}
 					/>
 					<Route
