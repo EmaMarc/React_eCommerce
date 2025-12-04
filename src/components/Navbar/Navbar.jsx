@@ -4,6 +4,7 @@ import "../../styles/Mist.scss";
 import logo from "../../../public/logo.png";
 import { getFixedFantasy48 } from "../../Features/products/api.js";
 import Cart from "../Cart/Cart.jsx";
+import { useAuth } from "../../context/useAuth";
 
 // === Estilos de links con subrayado animado (desde el centro) ===
 const linkBase =
@@ -23,6 +24,7 @@ export default function Navbar() {
 	const [open, setOpen] = useState(false);
 	const [debounced, setDebounced] = useState("");
 	const navigate = useNavigate();
+	const { user, logout } = useAuth();
 
 	// Carga los 48 una vez (de localStorage o fetch)
 	useEffect(() => {
@@ -131,6 +133,11 @@ export default function Navbar() {
 					<div
 						className="flex items-center gap-2"
 						ref={popRef}>
+						{user && (
+							<span className="text-[color:var(--green-700)] font-medium mr-2">
+								Bienvenido/a <b className="text-[color:var(--green-500)] ">{user.nombre}</b>!!
+							</span>
+						)}
 						<form
 							onSubmit={doSearch}
 							className="group/search relative">
@@ -178,7 +185,7 @@ export default function Navbar() {
                     bg-[color:var(--green-600)] hover:bg-[color:var(--green-500)]
                     shadow-[var(--shadow-soft)] relative overflow-hidden transition-colors
                     after:content-[''] after:absolute after:inset-0 after:rounded-full
-                    after:bg-white/0 hover:after:bg-white/10 after:transition
+                    after:bg-white/0 hover:after:bg-white/10 after:transition cursor-pointer
                   "
 									title="Buscar">
 									Buscar
@@ -231,9 +238,53 @@ export default function Navbar() {
 								</div>
 							)}
 						</form>
+						{/* Usuario / Login - Register */}
+						<div className="flex items-center gap-3 mr-4">
+							{!user && (
+								<>
+									<NavLink
+										to="/login"
+										className={`${linkBase}`}>
+										Login
+									</NavLink>
+									<NavLink
+										to="/register"
+										className={`${linkBase}`}>
+										Register
+									</NavLink>
+								</>
+							)}
+						</div>
 
 						{/* Carrito */}
-						<Cart />
+						{user && <Cart />}
+
+						{user && (
+							<div className="flex items-center gap-2">
+								<button
+									onClick={() => {
+										logout();
+										navigate("/login");
+									}}
+									className="
+										px-4 py-1.5 ml-3
+										rounded-full
+										bg-[color:var(--green-600)] 
+										text-white 
+										font-medium
+										shadow-[var(--shadow-soft)]
+										transition-all
+										hover:bg-[color:var(--green-500)]
+										hover:shadow-[var(--shadow-green)]
+										focus:outline-none
+										focus:ring-2
+										focus:ring-[color:var(--green-400)]
+										active:scale-[0.98] cursor-pointer
+									">
+									Logout
+								</button>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>

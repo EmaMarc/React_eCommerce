@@ -1,17 +1,17 @@
+// src/pages/Products/BookCard/BookCard.jsx
 import { Link } from "react-router-dom";
 import { cartStore } from "../../../components/Cart/cartStore.js";
 
 export default function BookCard({ book }) {
-	const { title, authors, image, firstYear, price, workKey, id } = book;
-	const workParam = workKey?.replace("/works/", "") || id; // ruta corta
+	const { id, title, authors, image, firstYear, price } = book;
 
 	return (
 		<Link
-			to={`/products/${encodeURIComponent(workParam)}`}
+			to={`/products/${encodeURIComponent(id)}`}
 			state={book}
 			className="block">
 			<article className="rounded-xl bg-[rgba(255,255,255,.82)] border [border-color:var(--surface-border)] shadow-[var(--shadow-soft)] overflow-hidden h-full">
-				{/* Portada (2:3) */}
+				{/* Portada */}
 				<div className="aspect-[2/3] bg-white/70">
 					{image ? (
 						<img
@@ -36,6 +36,7 @@ export default function BookCard({ book }) {
 						<span className="text-sm font-medium text-[color:var(--green-700)]">{price}</span>
 					</div>
 				</div>
+
 				<button
 					type="button"
 					onClick={(e) => {
