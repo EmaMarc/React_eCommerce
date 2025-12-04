@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../../../public/logo.png";
 import "../../styles/Mist.scss";
+import "./HomeStyles.css";
 
 // ⭐ IMPORTAR HELMET
 import { Helmet } from "react-helmet";
