@@ -7,7 +7,7 @@ import { useAuth } from "../../context/useAuth";
 import AddProductModal from "./AddProducts/AddProducts";
 import { useProducts } from "../../context/ProductContext.jsx";
 
-import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { toast } from "react-hot-toast";
 
 export default function Products() {
@@ -99,64 +99,79 @@ export default function Products() {
 	}, [books.length]); // <--- ESTA ES LA CLAVE
 
 	return (
-		<section className="w-full px-12 pt-12 pb-10">
-			<header className="mb-4">
-				<h2 className="[font-family:var(--font-display)] text-3xl text-[color:var(--green-700)]">Catálogo</h2>
-				<p className="mt-1 text-[color:var(--green-700)]/70">
-					Mostrando {filteredItems.length} de {books.length}
-				</p>
-			</header>
+		<>
+			{/* ⭐ SEO CON REACT HELMET */}
+			<Helmet>
+				<title>Catálogo | Mythica Books</title>
+				<meta
+					name="description"
+					content="Explora el catálogo completo de libros de fantasia disponibles. Filtra por precio, año, autores y más."
+				/>
+				<meta
+					name="keywords"
+					content="libros, catálogo, biblioteca, productos, precios, comprar libros, fantasía, autores, dragon, magia, aventuras, novelas, literatura, bestsellers"
+				/>
+				<meta charSet="utf-8" />
+			</Helmet>
+			<section className="w-full px-12 pt-12 pb-10">
+				<header className="mb-4">
+					<h2 className="[font-family:var(--font-display)] text-3xl text-[color:var(--green-700)]">Catálogo</h2>
+					<p className="mt-1 text-[color:var(--green-700)]/70">
+						Mostrando {filteredItems.length} de {books.length}
+					</p>
+				</header>
 
-			<div className="relative">
-				<div className="grid grid-cols-[260px_minmax(0,1fr)] gap-8 items-start">
-					<div
-						ref={stickyRef}
-						style={fixed ? { position: "fixed", top: `${top}px`, left, width } : {}}>
-						<BookFilters
-							value={filters}
-							onChange={setFilters}
-							onClear={() =>
-								setFilters({
-									q: "",
-									yearFrom: "",
-									yearTo: "",
-									withCover: false,
-									priceMin: priceBounds.min,
-									priceMax: priceBounds.max,
-								})
-							}
-							minPriceBound={priceBounds.min}
-							maxPriceBound={priceBounds.max}
-						/>
+				<div className="relative">
+					<div className="grid grid-cols-[260px_minmax(0,1fr)] gap-8 items-start">
+						<div
+							ref={stickyRef}
+							style={fixed ? { position: "fixed", top: `${top}px`, left, width } : {}}>
+							<BookFilters
+								value={filters}
+								onChange={setFilters}
+								onClear={() =>
+									setFilters({
+										q: "",
+										yearFrom: "",
+										yearTo: "",
+										withCover: false,
+										priceMin: priceBounds.min,
+										priceMax: priceBounds.max,
+									})
+								}
+								minPriceBound={priceBounds.min}
+								maxPriceBound={priceBounds.max}
+							/>
 
-						{user?.admin && (
-							<button
-								onClick={() => setShowAddModal(true)}
-								className="mt-4 px-4 py-2.5 rounded-xl bg-[color:var(--green-600)] text-white shadow hover:bg-[color:var(--green-500)] cursor-pointer">
-								Agregar producto
-							</button>
-						)}
+							{user?.admin && (
+								<button
+									onClick={() => setShowAddModal(true)}
+									className="mt-4 px-4 py-2.5 rounded-xl bg-[color:var(--green-600)] text-white shadow hover:bg-[color:var(--green-500)] cursor-pointer">
+									Agregar producto
+								</button>
+							)}
+						</div>
+
+						{fixed && <div style={{ height }} />}
+
+						<main>
+							<ul className="grid grid-cols-3 gap-6">
+								{filteredItems.map((b) => (
+									<li
+										key={b.id}
+										className="group">
+										<BookCard book={b} />
+									</li>
+								))}
+							</ul>
+
+							{filteredItems.length === 0 && <div className="mt-8 text-[color:var(--green-700)]/70">No hay resultados con esos filtros.</div>}
+						</main>
 					</div>
-
-					{fixed && <div style={{ height }} />}
-
-					<main>
-						<ul className="grid grid-cols-3 gap-6">
-							{filteredItems.map((b) => (
-								<li
-									key={b.id}
-									className="group">
-									<BookCard book={b} />
-								</li>
-							))}
-						</ul>
-
-						{filteredItems.length === 0 && <div className="mt-8 text-[color:var(--green-700)]/70">No hay resultados con esos filtros.</div>}
-					</main>
 				</div>
-			</div>
 
-			{showAddModal && <AddProductModal onClose={() => setShowAddModal(false)} />}
-		</section>
+				{showAddModal && <AddProductModal onClose={() => setShowAddModal(false)} />}
+			</section>
+		</>
 	);
 }
